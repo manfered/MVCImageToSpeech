@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "ImageToSpeech";
+}
+
+<div class="jumbotron">
+    <h1>Image To Speech</h1>
+    <p class="lead">ImageToSpeech combines OCR and textToSpeech ability. ImageToSpeech uses Apache Licensed <b>Tesseract</b> optical character recognition engine for the OCR processing,
+     and <b>.NET Speech Technology</b> for text to speech ability.</p>
+    <p>ImageToSpeech contains three parts : 
+    <ul>
+        <li>Asynchronous Image Upload</li>
+        <li>Optical Character Recognition</li>
+        <li>Text To Speech</li>
+    </ul>
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>ASP.NET MVC</h2>
+        <p>.Net framework speech library provides the ability to transform texts to audio files</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Ajax</h2>
+        <p>Ajax forms helps asynchronously upload the image files and perform the tasks.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>jQuery</h2>
+        <p>Helps using the Ajax forms, previewing the uploaded image files and more importantly playing the speech audio file.</p>
+    </div>
+</div>
+
+<!-- showing the result of uploaded image file -->
+<div class="row" id="uploadResultBox">
+
+</div>
+
+
+<!-- Image upload form box -->
+@using (Ajax.BeginForm("Index", "Home", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" id="uploadFormBox">
+        <div class="col-xs-12">
+            <label for="fileUploadInput" class="custom-file-upload">
+                Upload File
+            </label>
+            <input id="fileUploadInput" type="file" name="files" />
+        </div>
+    </div>
+
+
+    <div class="form-group" id="uploadProgressBox">
+        <div class="progress col-md-2" id="uploadProgressBar">
+            <div class="progress-bar">0%</div>
+        </div>
+        <div id="fileUploadStatus"></div>
+    </div>
+
+
+    <audio autoplay="autoplay" src="@Url.Content("~/SpeechFiles/" + ViewBag.FileName)" id="player"></audio>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="div-center">
+            <p><a class="btn btn-info btn-lg" id="refreshButton">ReTry &raquo;</a></p>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/ImageToSpeech.js"></script>
+}
