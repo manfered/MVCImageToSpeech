@@ -30,14 +30,15 @@ namespace MVCImageToSpeech.Models
                     pathToStore += "/" + operationResult.AudioFileName + ".wav";
                     speechSynthesizer.SetOutputToWaveFile(pathToStore);
                     speechSynthesizer.Speak(operationResult.textToSpeechString);
-
                     operationResult.StatusStr = OperationResultStatus.Success;
                     operationResult.ResultStr += "\r\nTest successfully turned to audio";
                 }
                 catch (Exception ex)
                 {
                     operationResult.StatusStr = OperationResultStatus.Fail;
-                    operationResult.ResultStr += $"Unable to speech! - error : {ex.Message}";
+                    operationResult.ResultStr += $"\r\nUnable to speech! - error : {ex.Message}";
+                    operationResult.ResultStr += $"\r\nThe cause of this issue is permissions on the server. speech.dll needs some permissions to register keys." +
+                                                    "MVCImageToSpeech.gilasak.com runs on a shared hosting which does'nt have the sufficient permissions";
                 }
                 
             }
